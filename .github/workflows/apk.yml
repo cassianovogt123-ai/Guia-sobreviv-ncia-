@@ -1,0 +1,33 @@
+name: Gerar APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm install --no-audit --no-fund
+      # O guia é um arquivo só; o app empacota esse mesmo arquivo.
+      - run: mkdir -p www && cp Guia-de-Campo-Vogt.html www/index.html
+      - run: npx cap add android && npx cap sync android
+      # shortcut: APK de teste (debug). Cada build tem chave diferente, então para atualizar é preciso desinstalar a versão antiga antes. Trocar por assinatura fixa se for distribuir.
+      - name: Compilar APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk Guia-de-Campo-Vogt.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Guia-de-Campo-Vogt-APK
+          path: Guia-de-Campo-Vogt.apk
