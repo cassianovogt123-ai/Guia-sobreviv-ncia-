@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guia de Campo Vogt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: manual de campo — busca fixa no topo, números de emergência sempre primeiro, fichas que abrem e fecham. */
+:root {
+  --bg: #edf0ea; --card: #ffffff; --ink: #1b2520; --muted: #55635a; --line: #cfd6cd;
+  --brand: #2e5a41; --bar: #2e5a41; --signal: #d9480f; --stop: #b42318; --stop-bg: #fdecea; --ok-bg: #e7f0e9;
+  --head: "Roboto Condensed", "sans-serif-condensed", "Arial Narrow", "Bahnschrift", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111714; --card: #1a221d; --ink: #e5ebe6; --muted: #9aa89f; --line: #2c3730;
+  --brand: #7fc19a; --bar: #1f3d2c; --signal: #ff8a3d; --stop: #ff8a80; --stop-bg: #3a1d1b; --ok-bg: #1d2e23; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111714; --card: #1a221d; --ink: #e5ebe6; --muted: #9aa89f; --line: #2c3730;
+  --brand: #7fc19a; --bar: #1f3d2c; --signal: #ff8a3d; --stop: #ff8a80; --stop-bg: #3a1d1b; --ok-bg: #1d2e23; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); margin: 0 }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bar) }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bar); color: #fff; padding-block: 12px 10px }
+header .wrap { display: grid; gap: 8px }
+h1 { font: 700 1.35rem/1.1 var(--head); font-stretch: condensed; letter-spacing: .04em; text-transform: uppercase; margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap }
+h1 small { font: 500 .72rem var(--mono); letter-spacing: .02em; text-transform: none; opacity: .85 }
+#q { width: 100%; font: inherit; padding: 10px 12px; border-radius: 6px; border: 0; background: #fff; color: #1b2520 }
+#q:focus-visible { outline: 3px solid var(--signal); outline-offset: 1px }
+
+nav { overflow-x: auto; padding-block: 10px; border-bottom: 1px solid var(--line) }
+nav .row { display: flex; gap: 8px; width: max-content }
+nav button { font: 600 .85rem var(--head); letter-spacing: .05em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer }
+nav button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink) }
+button:focus-visible, summary:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px }
+
+main { padding-block: 14px 40px; display: grid; gap: 14px }
+.sos { background: var(--card); border: 2px solid var(--signal); border-radius: 8px; padding: 12px 14px; display: grid; gap: 8px }
+.sos h2 { margin: 0; font: 700 .85rem var(--head); letter-spacing: .08em; text-transform: uppercase; color: var(--signal) }
+.nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 6px 14px; margin: 0 }
+.nums div { display: flex; gap: 8px; align-items: baseline; min-width: 0 }
+.nums dt { font: 700 1.15rem var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap }
+.nums dd { margin: 0; color: var(--muted); font-size: .85rem }
+.note { font-size: .85rem; color: var(--muted); margin: 0 }
+
+h2.sec { font: 700 1.05rem var(--head); letter-spacing: .06em; text-transform: uppercase; margin: 10px 0 0; color: var(--brand); border-bottom: 2px solid var(--brand); padding-bottom: 4px }
+.list { display: grid; gap: 8px }
+details { background: var(--card); border: 1px solid var(--line); border-radius: 8px }
+summary { cursor: pointer; padding: 12px 14px; font-weight: 650; list-style: none; display: flex; justify-content: space-between; gap: 10px }
+summary::-webkit-details-marker { display: none }
+summary::after { content: "+"; font: 700 1.1rem var(--mono); color: var(--muted) }
+details[open] summary::after { content: "–" }
+.body { padding: 0 14px 14px; display: grid; gap: 10px }
+.body p { margin: 0 }
+.body ol, .body ul { margin: 0; padding-left: 1.3em; display: grid; gap: 4px }
+.box { border-radius: 6px; padding: 8px 12px }
+.box b { font: 700 .75rem var(--head); letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 2px }
+.no { background: var(--stop-bg); color: var(--ink) }
+.no b { color: var(--stop) }
+.help { background: var(--ok-bg) }
+.help b { color: var(--brand) }
+.check label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; border-bottom: 1px dashed var(--line) }
+.check input { width: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--brand) }
+.empty { color: var(--muted); text-align: center; padding: 30px 0 }
+footer { font-size: .8rem; color: var(--muted); padding-block: 10px 30px; display: grid; gap: 6px }
+footer ul { margin: 0; padding-left: 1.2em }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important } }
+</style>
+
+</head><body>
+<header>
+  <div class="wrap">
+    <h1>Guia de Campo Vogt <small>funciona sem internet</small></h1>
+    <input id="q" type="search" placeholder="Buscar: cobra, queimadura, água, enchente…" aria-label="Buscar no guia" autocomplete="off">
+  </div>
+</header>
+<nav aria-label="Seções"><div class="wrap"><div class="row" id="tabs"></div></div></nav>
+
+<main class="wrap">
+  <section class="sos" aria-label="Números de emergência">
+    <h2>Emergência — ligue primeiro</h2>
+    <dl class="nums">
+      <div><dt>192</dt><dd>SAMU</dd></div>
+      <div><dt>193</dt><dd>Bombeiros</dd></div>
+      <div><dt>190</dt><dd>Polícia Militar</dd></div>
+      <div><dt>199</dt><dd>Defesa Civil</dd></div>
+      <div><dt>0800 643 5252</dt><dd>CIATox SC (envenenamento, 24 h)</dd></div>
+      <div><dt>0800 722 6001</dt><dd>Disque-Intoxicação (Anvisa)</dd></div>
+    </dl>
+    <p class="note">Alertas de temporal no celular: mande seu CEP por SMS para <b>40199</b>. Este guia não substitui atendimento médico. Sempre que puder, ligue 192.</p>
+  </section>
+  <div id="out"></div>
+  <footer>
+    <b>De onde vem o conteúdo</b>
+    <ul>
+      <li>Ministério da Saúde: protocolo de acidentes ofídicos; soro caseiro (concentrações do MS/OMS).</li>
+      <li>Memento Fitoterápico e Formulário de Fitoterápicos da Farmacopeia Brasileira (Anvisa) e Memento da UNA-SUS: doses e cuidados das plantas.</li>
+      <li>Diretrizes de RCP (AHA / Cruz Vermelha), Defesa Civil e CIATox/SC.</li>
+    </ul>
+    <span>Para salvar no celular: baixe este arquivo e abra pelo navegador. Ele não precisa de internet.</span>
+  </footer>
+</main>
+
+<script>
+const SECOES = [
+  ["socorro", "Primeiros socorros"], ["agua", "Água"], ["sobrev", "Sobrevivência"],
+  ["clima", "Temporal e enchente"], ["plantas", "Plantas"], ["mochila", "Mochila"]
+];
+
+// s=seção, t=título, k=palavras de busca, d=resumo, p=passos, o=passos em ordem, n=não faça, a=quando chamar ajuda
+const G = [
+// ---------- PRIMEIROS SOCORROS ----------
+{s:"socorro", t:"Antes de tudo: cena segura e chamar ajuda", k:"ligar 192 samu atendimento",
+ p:["Olhe em volta: fio de luz caído, trânsito, fogo, água correndo, gás. Se o lugar não é seguro, não entre.",
+    "Ligue 192 (SAMU) ou 193 (Bombeiros). Coloque no viva-voz para ficar com as mãos livres.",
+    "Diga: o que aconteceu, endereço com ponto de referência, quantas vítimas, se estão acordadas e respirando.",
+    "Não desligue até o atendente mandar. Ele orienta o que fazer até o socorro chegar.",
+    "Se a ligação não completa, tente SMS para alguém próximo pedir ajuda por você."], o:true},
+
+{s:"socorro", t:"Parada cardíaca: massagem no peito (RCP)", k:"rcp reanimação coração parou não respira massagem cardíaca",
+ d:"Sinal: a pessoa não responde e não respira, ou só dá umas puxadas de ar fracas.",
+ p:["Ligue 192 e, se houver, peça para alguém buscar um desfibrilador (DEA).",
+    "Deite a pessoa de costas em lugar firme (chão).",
+    "Mãos uma sobre a outra no centro do peito, na metade de baixo do osso.",
+    "Braços retos. Afunde o peito 5 a 6 cm, 100 a 120 vezes por minuto (ritmo de “Stayin' Alive”).",
+    "Deixe o peito voltar todo entre uma compressão e outra.",
+    "Se você sabe fazer respiração boca a boca: 30 compressões e 2 sopros. Se não sabe: só compressões, sem parar.",
+    "Continue até o socorro chegar ou a pessoa reagir. Se tiver mais gente, troquem a cada 2 minutos."], o:true,
+ a:"Criança: uma ou duas mãos, cerca de 5 cm. Bebê: dois dedos no centro do peito, cerca de 4 cm. Em afogamento e em crianças, os sopros são ainda mais importantes para quem sabe fazer."},
+
+{s:"socorro", t:"Engasgo", k:"engasgado sufocado heimlich não consegue respirar bebê",
+ d:"Se a pessoa tosse com força, deixe tossir e incentive. Aja quando ela não consegue falar, tossir ou respirar.",
+ p:["Adulto ou criança: fique atrás, abrace pela cintura.",
+    "Mão fechada logo acima do umbigo, a outra mão por cima.",
+    "Puxe com força para dentro e para cima. Repita até o objeto sair (manobra de Heimlich).",
+    "Grávida ou pessoa muito obesa: faça as compressões no centro do peito.",
+    "Se a pessoa desmaiar: deite no chão, ligue 192 e comece a RCP. Antes dos sopros, olhe a boca e tire o objeto só se estiver vendo."], o:true,
+ n:["Não enfie o dedo às cegas na boca: empurra o objeto mais para dentro."],
+ a:"Bebê (menos de 1 ano): de bruços no seu antebraço, cabeça mais baixa que o corpo, 5 tapas firmes entre as omoplatas. Vire de barriga para cima e faça 5 compressões com dois dedos no centro do peito. Repita até sair. Ligue 192."},
+
+{s:"socorro", t:"Sangramento forte", k:"hemorragia corte sangue torniquete nariz",
+ p:["Proteja as mãos (luva ou saco plástico) se tiver.",
+    "Aperte firme direto no ferimento com um pano limpo.",
+    "Não tire o pano. Se encharcar, coloque outro por cima e continue apertando.",
+    "Mantenha a pressão por pelo menos 10 minutos sem espiar.",
+    "Braço ou perna sangrando muito e sem parar com a pressão: torniquete 5 a 7 cm acima do ferimento (fora da articulação). Use tira de pano larga, dê um nó, coloque um bastão e gire até o sangue parar. Anote a hora e não afrouxe. Ligue 192."], o:true,
+ n:["Não use fio fino, arame ou barbante como torniquete.","Não tire objeto cravado: prenda ele no lugar com panos em volta."],
+ a:"Sangue no nariz: sentado, cabeça um pouco para a frente, aperte a parte mole do nariz por 10 minutos. Não incline a cabeça para trás."},
+
+{s:"socorro", t:"Queimadura", k:"queimou fogo água quente óleo química babosa bolha",
+ p:["Água corrente fria (não gelada) sobre a queimadura por 20 minutos.",
+    "Tire anéis, relógio e roupas que não estejam grudadas, antes de inchar.",
+    "Cubra com filme plástico de cozinha ou pano limpo, sem apertar.",
+    "Queimadura química: lave com muita água corrente por pelo menos 20 minutos e tire a roupa contaminada."], o:true,
+ n:["Não use gelo, pasta de dente, manteiga, óleo, pó de café ou clara de ovo.","Não estoure bolhas e não arranque roupa grudada."],
+ a:"Procure atendimento se for maior que a palma da mão da vítima, no rosto, mãos, pés, genitais ou dobras, se a pele ficou branca ou preta, se foi choque elétrico ou química, ou se é criança ou idoso. Em queimadura leve, depois de esfriar, o gel transparente da babosa pode aliviar."},
+
+{s:"socorro", t:"Choque elétrico e fio caído", k:"eletricidade fio poste energia choque",
+ p:["Não toque na vítima enquanto ela estiver encostada na energia.",
+    "Desligue o disjuntor ou a chave geral.",
+    "Se não der para desligar e for energia de casa: afaste a vítima com objeto seco que não conduz (cabo de vassoura de madeira, cadeira de plástico), pisando em lugar seco.",
+    "Fio caído na rua: fique a pelo menos 10 metros, longe de poças e cercas. Ligue 193 e a distribuidora de energia.",
+    "Depois de afastada: se não respira, comece a RCP."], o:true,
+ a:"Toda pessoa que levou choque forte deve ser avaliada, mesmo parecendo bem: pode ter problema no coração ou queimadura por dentro."},
+
+{s:"socorro", t:"Pessoa atingida por raio", k:"raio relâmpago descarga",
+ p:["A vítima de raio não fica com eletricidade: pode tocar nela.",
+    "Se não respira, ligue 192 e comece a RCP na hora.",
+    "Com várias vítimas, atenda primeiro quem parece morto. Quem está acordado e gemendo geralmente sobrevive."], o:true},
+
+{s:"socorro", t:"Fratura, entorse e suspeita de coluna", k:"osso quebrado tala torceu pé coluna pescoço queda",
+ p:["Não tente colocar o osso no lugar.",
+    "Imobilize na posição em que está, com tala de papelão, revista dobrada ou madeira.",
+    "A tala deve pegar a articulação de cima e a de baixo. Amarre com tiras de pano, sem apertar demais.",
+    "Fratura exposta: cubra com pano limpo e não empurre o osso para dentro."], o:true,
+ n:["Suspeita de coluna (queda de altura, acidente, dor no pescoço ou costas, formigamento): não mova a pessoa, a não ser que haja perigo imediato. Ligue 192."],
+ a:"Entorse: repouso, gelo enrolado num pano por 15 a 20 minutos e membro elevado."},
+
+{s:"socorro", t:"AVC (derrame)", k:"avc derrame boca torta fala enrolada braço fraco",
+ d:"Teste rápido: peça para sorrir (rosto torto?), levantar os dois braços (um cai?) e repetir uma frase (fala enrolada?).",
+ p:["Qualquer um desses sinais: ligue 192 na hora.","Anote a hora em que começaram os sintomas.","Deixe a pessoa deitada de lado se estiver sonolenta."], o:true,
+ n:["Não dê comida, água ou remédio."],
+ a:"O tratamento funciona melhor nas primeiras horas. Não espere melhorar."},
+
+{s:"socorro", t:"Infarto", k:"infarto dor no peito coração ataque cardíaco",
+ d:"Dor ou aperto no peito que dura mais que alguns minutos e pode ir para o braço, mandíbula ou costas. Suor frio, falta de ar, enjoo. Em mulheres, idosos e diabéticos os sinais podem ser mais fracos.",
+ p:["Ligue 192.","Deixe a pessoa sentada, descansando, com a roupa afrouxada.","Não deixe fazer esforço nem dirigir.","Se desmaiar e não respirar: RCP."], o:true,
+ n:["Só dê aspirina se o atendente do 192 orientar."]},
+
+{s:"socorro", t:"Convulsão", k:"convulsão ataque epilepsia tremedeira",
+ p:["Proteja a cabeça com algo macio.","Afaste objetos em volta.","Marque o tempo.","Quando parar, coloque de lado (posição lateral de segurança) e deixe descansar."], o:true,
+ n:["Não segure a pessoa.","Não coloque nada na boca. Ninguém “engole a língua”."],
+ a:"Ligue 192 se durar mais de 5 minutos, se repetir, se for a primeira vez, se a pessoa se machucou, se estiver na água ou for grávida."},
+
+{s:"socorro", t:"Desmaio e posição lateral de segurança", k:"desmaio desmaiou inconsciente lado vômito",
+ p:["Desmaio: deite a pessoa e levante as pernas uns 30 cm. Afrouxe a roupa e deixe o ar circular.",
+    "Se não acordar em 1 minuto, ligue 192.",
+    "Inconsciente mas respirando: vire de lado, com a perna de cima dobrada e a cabeça um pouco para trás, para o vômito escorrer.",
+    "Confira a respiração a cada minuto até o socorro chegar."], o:true,
+ n:["Não dê água a quem ainda não acordou direito."]},
+
+{s:"socorro", t:"Picada de cobra", k:"cobra jararaca cascavel coral serpente picada veneno",
+ d:"Orientação do Ministério da Saúde.",
+ p:["Mantenha a vítima calma, deitada e se mexendo o mínimo.",
+    "Lave o local com água e sabão.",
+    "Mantenha o braço ou a perna elevado e esticado.",
+    "Tire anéis, pulseiras e calçado, porque o membro pode inchar.",
+    "Dê água se estiver acordada e sem vômito.",
+    "Leve rápido ao hospital. Só o hospital tem o soro antiveneno. Se der, tire foto da cobra sem se arriscar."], o:true,
+ n:["Não faça torniquete nem garrote.","Não corte, não chupe e não fure o local.","Não coloque folha, pó de café, terra ou querosene.","Não dê bebida alcoólica nem anti-inflamatório (ibuprofeno, diclofenaco)."],
+ a:"Dúvidas: CIATox SC 0800 643 5252, 24 horas."},
+
+{s:"socorro", t:"Aranha e escorpião", k:"aranha marrom armadeira escorpião picada",
+ d:"Em Santa Catarina a aranha-marrom é comum. A picada quase não dói, e a ferida aparece horas depois como mancha arroxeada ou bolha.",
+ p:["Lave o local com água e sabão.","Compressa morna pode aliviar a dor de escorpião e armadeira.","Procure atendimento. Leve o animal num pote, se for seguro."], o:true,
+ n:["Não faça torniquete, não corte e não coloque nada sobre a picada."],
+ a:"Picada de aranha-marrom: vá ao posto mesmo sem dor. Criança picada por escorpião é emergência: ligue 192. Prevenção: sacuda roupas, sapatos, toalhas e roupa de cama antes de usar."},
+
+{s:"socorro", t:"Envenenamento e intoxicação", k:"veneno intoxicação produto limpeza remédio agrotóxico monóxido gás",
+ p:["Ligue CIATox SC 0800 643 5252 ou Disque-Intoxicação 0800 722 6001 (24 h). Tenha a embalagem em mãos.",
+    "Produto na pele ou nos olhos: lave com água corrente por 15 minutos.",
+    "Desmaio, convulsão ou falta de ar: ligue 192."], o:true,
+ n:["Não provoque vômito.","Não dê leite, óleo ou outra coisa “para cortar o veneno”."],
+ a:"Dor de cabeça, tontura e enjoo em várias pessoas da casa ao mesmo tempo pode ser monóxido de carbono (gerador, fogareiro ou brasa em lugar fechado). Saia para o ar livre e ligue 192."},
+
+{s:"socorro", t:"Diarreia, vômito e desidratação: soro caseiro", k:"soro caseiro desidratação diarreia vômito",
+ p:["1 litro de água filtrada e fervida (já fria).","1 colher de chá rasa de sal (cerca de 3,5 g).","1 colher de sopa de açúcar (cerca de 20 g).","Misture e tome em goles pequenos, várias vezes. Vale por 24 horas."], o:true,
+ a:"Procure atendimento se tiver sangue nas fezes, muita sonolência, olhos fundos, boca muito seca, pouca urina, ou se for bebê ou idoso com diarreia forte. O soro hidrata, mas não alimenta."},
+
+{s:"socorro", t:"Frio demais (hipotermia)", k:"frio hipotermia molhado tremendo",
+ d:"Sinais: tremor forte, fala lenta, confusão, sonolência.",
+ p:["Leve para lugar abrigado e tire a roupa molhada.","Seque e enrole em cobertores, cobrindo também a cabeça.","Calor do corpo de outra pessoa ajuda.","Se estiver acordada, dê bebida morna e doce."], o:true,
+ n:["Não dê bebida alcoólica.","Não esfregue a pele nem coloque água quente direto."],
+ a:"Ligue 192 se estiver confusa ou se parar de tremer sem ter esquentado."},
+
+{s:"socorro", t:"Calor demais (insolação)", k:"calor insolação sol desidratado",
+ p:["Leve para a sombra ou lugar fresco.","Molhe o corpo e abane.","Panos frios no pescoço, axilas e virilha.","Água em goles, se estiver acordada."], o:true,
+ a:"Confusão, desmaio ou pele quente e seca: ligue 192."},
+
+{s:"socorro", t:"Afogamento", k:"afogamento afogado rio água",
+ p:["Não entre na água se não for treinado. Jogue algo que flutue: garrafa PET vazia e fechada, boia, corda.",
+    "Fora da água: se não respira, ligue 192 e comece a RCP. Quem sabe fazer, começa com 5 sopros.",
+    "Se respira, coloque de lado e mantenha aquecida."], o:true,
+ a:"Mesmo quem se recuperou deve ser avaliado no hospital."},
+
+{s:"socorro", t:"Cortes, feridas e mordidas", k:"ferida corte machucado tétano mordida cachorro raiva infecção",
+ p:["Lave com água corrente e sabão.","Cubra com curativo ou pano limpo.","Troque o curativo todo dia."], o:true,
+ a:"Mordida de animal: lave bem por 15 minutos e vá ao posto (risco de raiva). Sinais de infecção: vermelhidão que aumenta, pus, febre. Vacina contra tétano: reforço a cada 10 anos."},
+
+{s:"socorro", t:"Alergia grave", k:"alergia inchaço garganta falta de ar anafilaxia",
+ d:"Inchaço de lábios ou língua, falta de ar, chiado, manchas pelo corpo, tontura.",
+ p:["Ligue 192.","Se a pessoa tem caneta de adrenalina receitada, aplique na coxa.","Deite com as pernas elevadas. Com falta de ar, deixe sentada."], o:true},
+
+{s:"socorro", t:"Algo no olho", k:"olho cisco produto químico",
+ p:["Lave com água corrente por 15 minutos, de dentro para fora.","Não esfregue."], o:true,
+ n:["Objeto cravado no olho: não tire. Cubra os dois olhos e procure atendimento."]},
+
+// ---------- ÁGUA ----------
+{s:"agua", t:"Qual água usar primeiro", k:"fonte água rio poço chuva",
+ d:"Da melhor para a pior: água guardada ou da rede, água da chuva bem coletada, poço ou fonte protegida, e por último rio.",
+ n:["Água de enchente: nunca beba.","Rio Uruguai: recebe agrotóxico e dejetos de suínos e aves. Ferver e filtrar não tiram produtos químicos. Use só se não houver outra."]},
+
+{s:"agua", t:"Captar água da chuva", k:"chuva calha cisterna bombona coletar",
+ p:["Leve a água da calha por um cano até bombona, balde ou caixa limpos e com tampa.",
+    "Jogue fora a primeira chuva, que lava o telhado. Um cano em “T” que enche primeiro e depois deixa passar resolve. Regra prática: 1 a 2 litros por m² de telhado.",
+    "Tampe tudo e coloque tela fina na entrada.",
+    "Antes de beber, filtre e desinfete (fervura, sol ou água sanitária)."], o:true,
+ n:["Não deixe água parada aberta: vira criadouro do mosquito da dengue."]},
+
+{s:"agua", t:"Filtro caseiro em camadas", k:"filtro caseiro areia carvão garrafa pet",
+ d:"Garrafa PET grande cortada ou balde com furinhos no fundo. Monte de cima para baixo:",
+ p:["Pano limpo","Areia fina","Carvão de fogão a lenha ou churrasqueira, moído e lavado","Areia grossa","Pedrinhas ou cascalho"], o:true,
+ n:["Esse filtro tira sujeira, barro e parte do gosto, mas não mata bactéria nem vírus. Depois de filtrar, sempre desinfete."]},
+
+{s:"agua", t:"Ferver", k:"ferver fervura desinfetar",
+ p:["Filtre ou deixe a sujeira assentar antes.","Deixe em fervura forte por pelo menos 1 minuto.","Guarde tampado em recipiente limpo."], o:true,
+ a:"É o método mais garantido contra micróbios."},
+
+{s:"agua", t:"Desinfetar no sol (SODIS)", k:"sol sodis garrafa transparente sem gastar",
+ p:["Use garrafas PET transparentes, de até 2 litros, sem rótulo.","Encha com água já filtrada e clara.","Deixe deitada no sol forte por 6 horas, em cima de telha ou chapa.","Dia nublado: 2 dias seguidos."], o:true,
+ n:["Não funciona com água turva nem em dia de chuva."]},
+
+{s:"agua", t:"Água sanitária", k:"cloro água sanitária hipoclorito gotas",
+ p:["Use água sanitária sem perfume e sem outros produtos (hipoclorito 2 a 2,5%).","2 gotas por litro de água.","Espere 30 minutos antes de beber."], o:true},
+
+{s:"agua", t:"Quanto guardar", k:"reserva estoque litros",
+ p:["4 litros por pessoa por dia (beber, cozinhar e higiene básica).","Pelo menos 3 dias para todos da casa.","Garrafas limpas, fechadas, longe do sol.","Troque a cada 6 meses."]},
+
+// ---------- SOBREVIVÊNCIA ----------
+{s:"sobrev", t:"O que vem primeiro (regra dos 3)", k:"prioridade regra dos 3",
+ d:"Em geral uma pessoa aguenta 3 minutos sem ar, 3 horas sem abrigo em frio ou calor extremo, 3 dias sem água e 3 semanas sem comida. Resolva nessa ordem: segurança e primeiros socorros, abrigo, água, comida."},
+
+{s:"sobrev", t:"Falta de energia", k:"apagão sem luz energia geladeira gerador vela celular bateria",
+ p:["Geladeira fechada segura o frio por cerca de 4 horas. Freezer cheio, cerca de 48 horas; pela metade, cerca de 24.",
+    "Remédio de geladeira (como insulina): caixa de isopor com gelo, sem encostar direto.",
+    "Use lanterna em vez de vela.",
+    "Celular: modo economia, brilho baixo, modo avião quando não estiver usando."],
+ n:["Na dúvida se a comida estragou, jogue fora."]},
+
+{s:"sobrev", t:"Monóxido de carbono", k:"monóxido gerador fogareiro brasa churrasqueira gás fechado",
+ n:["Nunca use gerador, fogareiro, churrasqueira ou brasa dentro de casa, garagem ou barraca fechada.","Gerador fica do lado de fora, a pelo menos 6 metros de portas e janelas."],
+ a:"O gás não tem cheiro nem cor e mata dormindo. Dor de cabeça, tontura e enjoo em várias pessoas: saia para o ar livre e ligue 192."},
+
+{s:"sobrev", t:"Fazer fogo", k:"fogo fogueira acender isqueiro bateria palha de aço lupa",
+ d:"Fogo precisa de três coisas: material que pega fácil (isca), gravetos e lenha.",
+ p:["Isca: algodão, papel, palha bem seca, casca fina. Algodão com vaselina pega muito bem.",
+    "Sem isqueiro: encoste os dois polos de uma bateria de 9 V (ou pilhas em série) numa palha de aço fina. Ela pega fogo na hora.",
+    "Dia de sol: lupa ou fundo de garrafa concentrando o sol na isca.",
+    "Ferro-cério (pederneira) funciona mesmo molhado."],
+ n:["Limpe a área em volta, longe de barraca e mato seco.","Deixe água perto. Para apagar, jogue água e mexa até esfriar."]},
+
+{s:"sobrev", t:"Abrigo, frio e chuva", k:"abrigo frio chuva molhado barraca dormir",
+ p:["Isole do chão: papelão, folhas secas, colchonete. É por baixo que mais se perde calor.",
+    "Use roupas em camadas e mantenha-se seco. Roupa molhada esfria rápido.",
+    "Cubra a cabeça e os pés.",
+    "Dormir perto de outra pessoa conserva calor."]},
+
+{s:"sobrev", t:"Sinalizar pedido de socorro", k:"socorro sos sinal apito resgate helicóptero",
+ p:["Três de qualquer coisa é pedido de socorro: 3 apitos, 3 fogueiras em triângulo, 3 flashes.",
+    "SOS na lanterna: 3 curtos, 3 longos, 3 curtos (··· ——— ···).",
+    "Espelho ou CD refletindo o sol na direção de quem procura.",
+    "Pano de cor forte em lugar alto.",
+    "Letras grandes no chão para avião ou helicóptero: V = preciso de ajuda, X = preciso de ajuda médica."]},
+
+{s:"sobrev", t:"Achar a direção sem GPS", k:"norte sul direção orientação sol cruzeiro do sul",
+ p:["O Sol nasce no leste e se põe no oeste.","Aqui no Sul do Brasil, por volta do meio-dia o Sol fica para o lado norte.",
+    "À noite: no Cruzeiro do Sul, prolongue o braço maior da cruz umas 4 vezes e meia e desça em linha reta até o horizonte. Ali é o sul."]},
+
+{s:"sobrev", t:"Higiene e banheiro improvisado", k:"higiene banheiro latrina fossa lavar mãos",
+ p:["Lave as mãos antes de comer e depois do banheiro, mesmo com pouca água.",
+    "Buraco para banheiro a pelo menos 30 metros de poço, fonte ou rio, e mais abaixo no terreno.",
+    "Cubra com terra depois de cada uso.","Lixo em saco fechado, longe da água e da comida."]},
+
+{s:"sobrev", t:"Comida de reserva", k:"comida estoque enlatado alimento reserva",
+ p:["Arroz, feijão, massa, aveia, leite em pó, enlatados, sal, açúcar, óleo.","Abridor de lata manual.","Use primeiro o que comprou primeiro e reponha.","Pelo menos 3 dias, de preferência 2 semanas."],
+ n:["Lata estufada, amassada na emenda ou enferrujada: jogue fora.","Não improvise conserva caseira sem técnica: risco de botulismo, que pode matar."]},
+
+{s:"sobrev", t:"Comunicação sem internet", k:"comunicação rádio sms família ponto de encontro sinal",
+ p:["SMS costuma passar quando a ligação não completa. Mande mensagens curtas.",
+    "Rádio AM/FM a pilha: a rádio local dá os avisos quando tudo cai.",
+    "Combine com a família um ponto de encontro no bairro e outro fora dele.",
+    "Tenha os telefones importantes anotados em papel."]},
+
+// ---------- CLIMA ----------
+{s:"clima", t:"Temporal com raios", k:"raio trovão tempestade temporal",
+ p:["Fique dentro de casa, longe de janelas e portas de vidro.","Tire aparelhos da tomada. Não use celular ligado na tomada.","Evite banho e torneira enquanto houver raios perto.",
+    "Distância do raio: conte os segundos entre o clarão e o trovão e divida por 3. O resultado é a distância em km. Menos de 3 km: está em cima.",
+    "Espere 30 minutos depois do último trovão para sair."],
+ n:["Na rua: não fique debaixo de árvore isolada, perto de cerca de arame ou dentro da água. Carro fechado é um bom abrigo."]},
+
+{s:"clima", t:"Vendaval e granizo", k:"vento vendaval granizo pedra destelhamento",
+ p:["Antes: recolha objetos soltos do pátio, se não houver raio por perto.","Fique longe de janelas.","Se o telhado começar a voar, vá para o cômodo mais protegido."],
+ n:["Não saia para cobrir carro ou moto durante raios."]},
+
+{s:"clima", t:"Tornado", k:"tornado funil redemoinho ronco",
+ d:"Sinais: ronco contínuo parecido com trem, nuvem baixa girando ou em funil, vento muito forte de repente, granizo grande.",
+ p:["Vá para o cômodo mais interno, no andar mais baixo, sem janelas (banheiro ou corredor).","Proteja cabeça e pescoço com colchão, travesseiro ou capacete.","Fique abaixado até passar."],
+ n:["Não fique perto de janelas para filmar.","Pego fora de casa: deite numa vala ou lugar baixo protegendo a cabeça. Não se abrigue debaixo de viaduto."]},
+
+{s:"clima", t:"Enchente do rio", k:"enchente cheia rio uruguai alagamento inundação",
+ p:["Acompanhe o boletim do rio Uruguai (Serviço Geológico do Brasil) e a Defesa Civil.",
+    "Antes da água chegar: suba móveis e eletrônicos, documentos em saco plástico, desligue o disjuntor e o gás.",
+    "Saia cedo se a Defesa Civil mandar. Leve a mochila de emergência."], o:true,
+ n:["Não ande em água correndo: 15 cm podem derrubar um adulto.","Não dirija em rua alagada: 30 a 60 cm de água arrastam um carro.","Não deixe criança brincar na água da enchente."]},
+
+{s:"clima", t:"Depois da enchente", k:"leptospirose limpeza depois enchente lama",
+ p:["Use botas e luvas (ou sacos plásticos amarrados) para limpar.","Jogue fora comida que encostou na água da enchente.","Lave e desinfete a casa com água sanitária diluída conforme o rótulo.","Só religue a energia com a instalação seca. Na dúvida, chame um eletricista."], o:true,
+ a:"Leptospirose: febre, dor de cabeça e dor forte na batata da perna até 30 dias depois do contato com a água. Procure o posto e conte que teve contato com enchente."},
+
+{s:"clima", t:"Receber alertas", k:"alerta defesa civil sms 40199",
+ p:["Mande o CEP de casa por SMS para 40199. É grátis e chegam os avisos da Defesa Civil.","Cadastre também o CEP de onde moram parentes.","Rádio local e o app de radar ajudam a acompanhar."]},
+
+// ---------- PLANTAS ----------
+{s:"plantas", t:"Leia antes de usar qualquer planta", k:"cuidado plantas chá infusão decocção dose",
+ p:["Tenha certeza de qual planta é. Nomes populares confundem plantas diferentes.",
+    "Infusão (folhas e flores): ferva a água, desligue, coloque a planta, tampe e espere 5 a 10 minutos.",
+    "Decocção (raízes, cascas e sementes): ferva a planta junto com a água.",
+    "As medidas são de planta seca. 1 colher de sopa de folha seca picada tem cerca de 3 g. 1 xícara = 150 mL.",
+    "Use por pouco tempo e pare se tiver qualquer reação."],
+ n:["Grávidas, quem amamenta e crianças pequenas: não use sem orientação.","Quem toma anticoagulante, remédio de pressão, de diabetes ou calmante: pergunte antes ao médico ou farmacêutico."]},
+
+{s:"plantas", t:"Camomila", k:"camomila calmante cólica ansiedade digestão Matricaria chamomilla",
+ d:"Matricaria chamomilla, flores secas. Para ansiedade leve, cólica e má digestão.",
+ p:["Infusão: 3 g (1 colher de sopa) em 1 xícara de água.","1 xícara de 3 a 4 vezes ao dia, entre as refeições.","Crianças de 2 a 12 anos: um quarto da dose."],
+ n:["Não usar na gravidez.","Alergia a plantas da família da margarida.","Pode interagir com varfarina e anticoncepcional."]},
+
+{s:"plantas", t:"Melissa (erva-cidreira)", k:"melissa erva cidreira insônia ansiedade calmante Melissa officinalis",
+ d:"Melissa officinalis, folhas. Para ansiedade, insônia leve, cólica e má digestão. Atenção: o capim-limão (capim-santo) também é chamado de cidreira, mas é outra planta.",
+ p:["Infusão: 1 a 4 g de folha seca em 1 xícara de água.","2 a 3 vezes ao dia. Maiores de 12 anos."],
+ n:["Não usar com hipotireoidismo ou pressão baixa.","Não somar com calmantes ou remédio para dormir."]},
+
+{s:"plantas", t:"Espinheira-santa", k:"espinheira santa azia gastrite estômago Maytenus ilicifolia",
+ d:"Maytenus ilicifolia, nativa do Sul. Folhas com espinhos na borda. Para azia, má digestão e como apoio no tratamento de gastrite.",
+ p:["1 colher de sopa (3 g) de folha seca em 1 xícara de água.","1 xícara 3 vezes ao dia. Maiores de 12 anos."],
+ n:["Não usar na gravidez nem amamentando (diminui o leite).","Existem plantas parecidas vendidas com o mesmo nome que podem ser tóxicas. Compre de fonte confiável."]},
+
+{s:"plantas", t:"Guaco", k:"guaco tosse catarro gripe bronquite expectorante Mikania",
+ d:"Mikania glomerata ou laevigata, folhas. Para tosse com catarro, gripe e resfriado.",
+ p:["Infusão: 3 g (1 colher de sopa) de folha seca em 1 xícara de água.","3 vezes ao dia. Maiores de 2 anos.","Use por poucos dias."],
+ n:["Não usar se houver suspeita de dengue (risco de sangramento).","Não usar com anticoagulante ou anti-inflamatório, na gravidez ou com doença no fígado."]},
+
+{s:"plantas", t:"Gengibre", k:"gengibre enjoo náusea gripe rouquidão Zingiber",
+ d:"Zingiber officinale, raiz. Para enjoo, náusea de viagem, gripe e rouquidão.",
+ p:["Decocção: raiz fresca picada em 1 xícara de água, ferva 7 minutos e deixe tampado mais 5.","Não passe de 2 g de raiz fresca por dia."],
+ n:["Não usar com pedra na vesícula ou com anticoagulante.","Grávidas: só com orientação."]},
+
+{s:"plantas", t:"Boldo", k:"boldo digestão gases fígado estômago",
+ d:"Várias plantas diferentes são chamadas de boldo. Esta dose é do boldo-baiano (Gymnanthemum amygdalinum), folhas. Para má digestão e gases.",
+ p:["Infusão: 3 g de folha seca em 1 xícara de água, 3 vezes ao dia antes das refeições.","Ou: meia folha fresca amassada num copo de água fria, até 2 vezes ao dia.","No máximo 2 semanas seguidas."],
+ n:["Não usar na gravidez nem amamentando."]},
+
+{s:"plantas", t:"Tanchagem (gargarejo)", k:"tanchagem transagem garganta boca gargarejo inflamação Plantago major",
+ d:"Plantago major, folhas. Para inflamação na boca e garganta. Uso em gargarejo ou na pele.",
+ p:["Infusão: 3 colheres de sopa (6 a 9 g) de folha picada em 1 xícara de água.","Gargarejo ou algodão no local, 3 vezes ao dia."],
+ n:["Não engolir depois do gargarejo.","Não usar na gravidez ou com pressão baixa."]},
+
+{s:"plantas", t:"Malva (gargarejo)", k:"malva garganta boca gargarejo bochecho Malva sylvestris",
+ d:"Malva sylvestris, folhas e flores. Para boca e garganta. Só uso externo.",
+ p:["Infusão: 6 g (2 colheres de sopa) em 1 xícara de água.","Gargarejo ou bochecho 3 vezes ao dia."],
+ n:["Não beber.","Evitar nos 3 primeiros meses de gravidez."]},
+
+{s:"plantas", t:"Calêndula (pele e feridas leves)", k:"calêndula ferida pele cicatrizar assadura Calendula officinalis",
+ d:"Calendula officinalis, flores. Uso externo em feridas leves, pele irritada e boca.",
+ p:["Infusão: 1 a 2 g de flores em 1 xícara de água.","Aplique com algodão ou faça bochecho 3 vezes ao dia."],
+ n:["Alergia a plantas da família da margarida.","Grávidas, quem amamenta e crianças: só com orientação."]},
+
+{s:"plantas", t:"Babosa (queimadura leve)", k:"babosa aloe queimadura pele gel",
+ d:"Aloe vera. Use só o gel transparente de dentro da folha fresca.",
+ p:["Esfrie a queimadura com água corrente antes.","Passe o gel transparente 1 a 3 vezes ao dia."],
+ n:["Não comer nem beber babosa. A parte amarela da folha é um laxante forte e irritante.","Pare se a pele reagir."]},
+
+{s:"plantas", t:"Alecrim (compressa para dor)", k:"alecrim dor muscular compressa Rosmarinus",
+ d:"Rosmarinus officinalis, folhas e flores. Compressa para dor muscular e nas juntas.",
+ p:["Infusão: 2 g em 1 xícara de água.","Molhe um pano e aplique 2 vezes ao dia."],
+ n:["Não usar na gravidez, amamentando ou com epilepsia.","Tomar o chá pode irritar estômago e rins."]},
+
+{s:"plantas", t:"Plantas que se comem (PANC)", k:"panc comer comestível pinhão beldroega serralha dente de leão ora-pro-nóbis capuchinha",
+ d:"Comuns na região. Só coma o que você conhece com certeza.",
+ p:["Pinhão: sempre cozido (1 a 2 horas na panela). Cru não.","Beldroega: folhas e talos, crus ou refogados.","Serralha: folhas novas, em salada ou refogadas.","Dente-de-leão: folhas novas, em salada ou refogadas.","Ora-pro-nóbis: folhas refogadas. O caule tem espinhos.","Capuchinha: folhas e flores cruas."],
+ n:["Na dúvida, não coma. Não existe teste caseiro confiável para saber se uma planta é venenosa.","Nunca coma cogumelo do mato."]},
+
+{s:"plantas", t:"Plantas venenosas comuns", k:"venenosa tóxica comigo ninguém pode mamona espirradeira",
+ d:"Comuns em pátios e beiras de estrada. Cuidado com crianças e animais.",
+ p:["Comigo-ninguém-pode","Espirradeira","Mamona (sementes)","Trombeteira (saia-branca)","Coroa-de-cristo (leite irrita a pele e os olhos)","Copo-de-leite","Mandioca-brava (crua)"],
+ a:"Se alguém comeu ou mastigou: CIATox SC 0800 643 5252."},
+
+// ---------- MOCHILA (checklist) ----------
+{s:"mochila", t:"Mochila de emergência", k:"mochila kit emergência lista checklist", check:[
+ "Água: 2 litros por pessoa","Água sanitária ou pastilhas para purificar","Comida para 3 dias e abridor de lata",
+ "Lanterna e pilhas extras","Rádio AM/FM a pilha","Power bank carregado e cabo","Apito",
+ "Kit de primeiros socorros: gaze, atadura, esparadrapo, luvas, soro fisiológico, tesoura","Remédios de uso contínuo para 7 dias e cópia da receita",
+ "Documentos (cópias) em saco plástico","Dinheiro em notas pequenas","Lista de telefones em papel",
+ "Roupa extra e capa de chuva","Manta térmica ou cobertor","Isqueiro e fósforos em saco fechado",
+ "Canivete ou multiferramenta","Corda e fita silver tape","Sacos de lixo","Sabonete, álcool gel, papel higiênico, absorventes",
+ "Chave reserva de casa e do carro","Óculos reserva, se usar","Itens de bebê ou pet, se tiver"]}
+];
+
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+G.forEach((g, i) => { g.id = "c" + i; g.txt = norm([g.t, g.k, g.d, ...(g.p||[]), ...(g.n||[]), g.a, ...(g.check||[])].join(" ")); });
+
+let marcados = {};
+try { marcados = JSON.parse(localStorage.getItem("gcv-mochila") || "{}"); } catch (e) {}
+const salvar = () => { try { localStorage.setItem("gcv-mochila", JSON.stringify(marcados)); } catch (e) {} };
+
+function card(g) {
+  let h = "";
+  if (g.d) h += "<p>" + esc(g.d) + "</p>";
+  if (g.p) { const tag = g.o ? "ol" : "ul"; h += "<" + tag + ">" + g.p.map(x => "<li>" + esc(x) + "</li>").join("") + "</" + tag + ">"; }
+  if (g.check) h += '<div class="check">' + g.check.map((x, j) => {
+    const id = "m" + j;
+    return '<label for="' + id + '"><input type="checkbox" id="' + id + '"' + (marcados[id] ? " checked" : "") + "><span>" + esc(x) + "</span></label>";
+  }).join("") + "</div>";
+  if (g.n) h += '<div class="box no"><b>Não faça</b>' + g.n.map(x => "<div>" + esc(x) + "</div>").join("") + "</div>";
+  if (g.a) h += '<div class="box help"><b>Importante</b>' + esc(g.a) + "</div>";
+  return '<details id="' + g.id + '"' + (g.check ? " open" : "") + "><summary><span>" + esc(g.t) + "</span></summary><div class=\"body\">" + h + "</div></details>";
+}
+
+let aba = "socorro";
+const out = document.getElementById("out"), q = document.getElementById("q"), tabs = document.getElementById("tabs");
+
+function render() {
+  const termo = norm(q.value.trim());
+  const lista = termo ? G.filter(g => termo.split(/\s+/).every(w => g.txt.includes(w))) : G.filter(g => g.s === aba);
+  if (!lista.length) { out.innerHTML = '<p class="empty">Nada encontrado. Tente outra palavra.</p>'; return; }
+  let h = "";
+  for (const [id, nome] of SECOES) {
+    const itens = lista.filter(g => g.s === id);
+    if (itens.length) h += '<h2 class="sec">' + nome + '</h2><div class="list">' + itens.map(card).join("") + "</div>";
+  }
+  out.innerHTML = h;
+  if (termo && lista.length <= 3) out.querySelectorAll("details").forEach(d => d.open = true);
+}
+
+tabs.innerHTML = SECOES.map(([id, nome]) => '<button type="button" data-s="' + id + '" aria-pressed="' + (id === aba) + '">' + nome + "</button>").join("");
+tabs.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  aba = b.dataset.s; q.value = "";
+  tabs.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+q.addEventListener("input", render);
+out.addEventListener("change", e => { if (e.target.type === "checkbox") { marcados[e.target.id] = e.target.checked; salvar(); } });
+render();
+</script>
+
+</body></html>
