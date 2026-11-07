@@ -106,7 +106,7 @@ footer ul { margin: 0; padding-left: 1.2em }
 
 <script>
 const SECOES = [
-  ["socorro", "Primeiros socorros"], ["agua", "Água"], ["sobrev", "Sobrevivência"],
+  ["socorro", "Primeiros socorros"], ["agua", "Água"], ["sobrev", "Sobrevivência"], ["mato", "No mato"],
   ["clima", "Temporal e enchente"], ["plantas", "Plantas"], ["mochila", "Mochila"]
 ];
 
@@ -343,6 +343,93 @@ const G = [
     "Rádio AM/FM a pilha: a rádio local dá os avisos quando tudo cai.",
     "Combine com a família um ponto de encontro no bairro e outro fora dele.",
     "Tenha os telefones importantes anotados em papel."]},
+
+// ---------- NO MATO ----------
+{s:"mato", t:"Se você se perdeu", k:"perdido perdeu trilha mato floresta",
+ p:["Pare. Sente, respire e beba um pouco de água. Pânico faz andar em círculos.",
+    "Pense: alguém sabe por onde você foi? Se sim, o melhor geralmente é ficar onde está e esperar.",
+    "Observe: sons de estrada, cachorro, motor, rio. Rio descendo costuma levar a casas e estradas.",
+    "Só então decida o plano: ficar e sinalizar, ou andar em uma direção fixa, marcando o caminho (galhos quebrados, pedras empilhadas)."], o:true,
+ a:"Criança perdida: ensine a “abraçar uma árvore” e ficar parada respondendo a quem chamar."},
+
+{s:"mato", t:"Kit de sobrevivência de bolso", k:"kit bolso faca canivete apito",
+ p:["Canivete ou faca","Isqueiro e pederneira","Apito","Lanterna pequena","Garrafa de metal (dá para ferver água nela)","Saco plástico grande e resistente","Cordão (paracord) de uns 10 metros","Linha de pesca e anzóis","Manta térmica","Algumas gotas de água sanitária num frasquinho","Celular carregado e power bank"]},
+
+{s:"mato", t:"Escolher o lugar do acampamento", k:"acampamento acampar barraca local escolher",
+ p:["Terreno plano, um pouco elevado e que escoe a água da chuva.",
+    "Perto de água, mas não na margem: pelo menos 60 metros e acima da marca da última cheia (folhas e galhos presos nos troncos mostram até onde a água subiu).",
+    "Protegido do vento por mato ou morro.",
+    "Olhe para cima: nada de árvore morta ou galho seco pendurado sobre a barraca.",
+    "Fogo e cozinha a favor do vento, longe da barraca. Banheiro a pelo menos 60 metros da água.",
+    "Comida guardada fechada e longe de onde se dorme, para não atrair bicho."],
+ n:["Não acampe em leito de rio seco ou fundo de vale: enxurrada chega sem aviso.","Não acampe no topo de morro exposto: raio e vento."]},
+
+{s:"mato", t:"Abrigo improvisado", k:"abrigo meia água lona galhos rede cabana",
+ p:["Meia-água: amarre uma vara entre duas árvores na altura da cintura. Encoste galhos inclinados de um lado só, com a parte fechada contra o vento. Cubra com lona, folhas de palmeira ou samambaia, de baixo para cima, como telhas.",
+    "Com lona: estique uma corda entre duas árvores e jogue a lona por cima, em forma de “A”. Prenda as pontas com pedras ou estacas.",
+    "Cama: nunca durma direto no chão. Faça um colchão de folhas secas com uns 20 cm de altura, ou use rede.",
+    "Abrigo pequeno esquenta mais. Faça só do tamanho de quem vai dormir."]},
+
+{s:"mato", t:"Onde achar água na natureza", k:"achar água natureza fonte nascente bambu taquara orvalho bromélia",
+ p:["Desça o terreno: água corre para os vales.",
+    "Sinais: mato mais verde e fechado, trilhas de bichos que se juntam, passarinhos e insetos voando baixo ao amanhecer e ao entardecer.",
+    "Leito de rio seco: cave na parte de fora da curva, onde a água passou por último. Às vezes aparece água a meio metro.",
+    "Taquara e bambu: sacuda o gomo. Se tiver barulho de água, faça um furo embaixo do nó.",
+    "Orvalho: de manhã cedo, passe um pano no capim molhado e torça num pote.",
+    "Saco plástico: amarre um saco transparente num galho com folhas, no sol. A planta “sua” e junta água no fundo. Rende pouco, mas é limpa.",
+    "Bromélias acumulam água entre as folhas, mas costumam ter larvas: filtre e purifique."],
+ n:["Não beba urina, água do mar nem bebida alcoólica: desidratam mais.","Toda água do mato deve ser purificada. Veja a aba Água: ferver, sol (SODIS) ou água sanitária."]},
+
+{s:"mato", t:"Purificar água no mato", k:"purificar ferver água mato",
+ p:["Se estiver turva, deixe assentar ou passe por um pano dobrado.",
+    "Ferva por pelo menos 1 minuto. Sem panela: use a garrafa de metal ou uma lata limpa.",
+    "Sem fogo: garrafa PET transparente no sol por 6 horas (SODIS), ou 2 gotas de água sanitária por litro e 30 minutos de espera."], o:true},
+
+{s:"mato", t:"Frutas nativas da região", k:"frutas nativas comer pitanga guabiroba araçá jabuticaba butiá uvaia cereja pinhão",
+ d:"Frutas da Mata Atlântica do Sul, fáceis de reconhecer e seguras quando maduras.",
+ p:["Pinhão (abril a julho): sempre cozido.","Pitanga","Guabiroba","Araçá","Jabuticaba","Uvaia","Cereja-do-mato","Butiá"],
+ n:["Não coma fruta que você não reconhece com certeza, mesmo que passarinho coma. O que serve para ave pode ser venenoso para gente."]},
+
+{s:"mato", t:"Onde achar comida", k:"comida achar comer fome mato",
+ d:"Água e abrigo vêm antes. Uma pessoa aguenta semanas sem comer, mas comer ajuda a manter calor e ânimo.",
+ p:["Plantas e frutas que você conhece (veja as abas Plantas e No mato).",
+    "Peixe: é a fonte mais fácil de proteína perto de rio.",
+    "Insetos: cupim, larva de palmeira (coró), gafanhoto sem pernas e asas, formiga içá. Sempre cozidos.",
+    "Ovos de ninho no chão ou em barranco."],
+ n:["Nunca coma lagarta peluda ou colorida, nem encoste nela.","Nunca coma cogumelo do mato.","Carne e peixe sempre bem cozidos."]},
+
+{s:"mato", t:"Pesca de sobrevivência", k:"pesca pescar anzol isca covo peixe rio",
+ p:["Anzol improvisado: alfinete dobrado, espinho firme ou o anel de lata de refrigerante recortado em forma de gancho.",
+    "Isca: minhoca, larva, gafanhoto, miolo de pão.",
+    "Melhor horário: amanhecer e entardecer, em remansos e perto de pedras e galhos caídos.",
+    "Covo de garrafa PET: corte o gargalo, encaixe ele invertido dentro da garrafa, coloque isca dentro e furos para a água passar. Deixe preso no fundo e confira de manhã.",
+    "Limpe o peixe longe do acampamento e cozinhe bem."],
+ a:"Fora de emergência, pescar exige licença. No rio Uruguai existe a piracema (período em que a pesca é proibida, normalmente de novembro a fevereiro)."},
+
+{s:"mato", t:"Armadilhas", k:"armadilha laço quatro caça preá animal",
+ d:"Caçar animal silvestre é crime no Brasil (Lei 9.605/98). A própria lei não considera crime quando é para matar a fome em estado de necessidade. Use só em emergência real.",
+ p:["Onde armar: em trilhas de bicho (caminhos batidos no mato, fezes, pegadas), perto de água ou de tocas.",
+    "Laço: arame fino ou cabo de aço fino, com uma argola na ponta para correr. A abertura do laço deve ter o tamanho de um punho fechado, a uns 4 dedos do chão, no meio da trilha. Prenda a outra ponta firme numa árvore ou estaca. Galhos dos lados ajudam a guiar o bicho.",
+    "Armadilha de peso (“quatro”): três gravetos entalhados encaixados em forma de número 4 seguram uma pedra chata ou tronco pesado inclinado. A isca vai na ponta do graveto de baixo. Quando o bicho mexe na isca, o peso cai.",
+    "Faça várias armadilhas em lugares diferentes. Uma só raramente pega alguma coisa."],
+ n:["Não arme perto de casas, trilhas de pessoas ou onde andam cachorros e crianças.","Confira as armadilhas pelo menos 2 vezes por dia, para o bicho não sofrer.","Desmonte todas antes de ir embora."]},
+
+{s:"mato", t:"Guardar comida sem geladeira", k:"secar defumar moquear conservar carne peixe",
+ p:["Secar: fatias finas de carne ou peixe com sal, penduradas no sol e no vento, longe de moscas.",
+    "Defumar (moquear): grelha de varas a uns 60 cm acima de brasa fraca com bastante fumaça, por várias horas, até secar bem.",
+    "Guarde em saco ou pano limpo, em lugar seco e alto."],
+ n:["Na dúvida se estragou (cheiro, gosma, mofo), jogue fora."]},
+
+{s:"mato", t:"Bichos perigosos da região", k:"cobra aranha taturana lagarta carrapato febre maculosa abelha vespa",
+ p:["Cobras (jararaca é a mais comum): olhe onde pisa e onde põe a mão. Use bota e calça comprida. Veja “Picada de cobra”.",
+    "Aranha-marrom: sacuda roupa, calçado e saco de dormir antes de usar.",
+    "Lagarta-de-fogo (taturana): fica em grupos nos troncos de árvores. Encostar pode causar sangramento grave. Lave com água, compressa fria e vá ao hospital, que tem soro específico.",
+    "Carrapato: transmite febre maculosa, que existe em SC. Examine o corpo todo dia. Retire com pinça bem rente à pele, puxando firme sem torcer. Febre e manchas na pele até 2 semanas depois: procure o posto e conte do carrapato.",
+    "Abelhas e vespas: afaste-se correndo, protegendo o rosto. Muitas picadas ou falta de ar: 192."]},
+
+{s:"mato", t:"Dois nós úteis", k:"nó corda lais de guia volta do fiel amarrar",
+ p:["Lais de guia (laço que não corre, para amarrar em volta de você ou de árvore): faça uma voltinha na corda. A ponta sai de dentro da voltinha (o coelho sai da toca), passa por trás da corda principal (dá a volta na árvore) e volta para dentro da voltinha (entra na toca). Puxe.",
+    "Volta do fiel (para prender corda em vara ou árvore): dê uma volta em torno da árvore, cruze por cima, dê a segunda volta e passe a ponta por baixo desse cruzamento. Puxe as duas pontas."]},
 
 // ---------- CLIMA ----------
 {s:"clima", t:"Temporal com raios", k:"raio trovão tempestade temporal",
