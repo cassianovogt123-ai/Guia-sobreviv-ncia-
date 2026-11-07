@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   android:
     runs-on: ubuntu-latest
@@ -31,3 +34,14 @@ jobs:
         with:
           name: Guia-de-Campo-Vogt-APK
           path: Guia-de-Campo-Vogt.apk
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Guia de Campo Vogt 1.0.${{ github.run_number }}
+          make_latest: "true"
+          body: |
+            **Celular (Android):** baixe `Guia-de-Campo-Vogt.apk` e abra o arquivo (permita "instalar apps desconhecidos"). Para atualizar, desinstale a versão antiga antes.
+            **Sem instalar:** baixe `Guia-de-Campo-Vogt.html` e abra no navegador. Funciona sem internet.
+          files: |
+            Guia-de-Campo-Vogt.apk
+            Guia-de-Campo-Vogt.html
